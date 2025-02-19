@@ -97,7 +97,7 @@ app.get('/callback', async (req, res) => {
               <h1>Done!</h1>
               <p>OAuth Process Completed Successfully.</p>
               <div class="token-info">
-                <p>Access Token: <strong>${access_token}</strong></p>
+                <p>ID Token: <strong>${id_token || 'No ID token received'}</strong></p>
               </div>
             </div>
           </body>
