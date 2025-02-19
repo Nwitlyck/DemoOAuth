@@ -48,14 +48,57 @@ app.get('/callback', async (req, res) => {
         <html>
           <head>
             <title>OAuth 2.0 - Done</title>
+            <style>
+              /* General Styles */
+              body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f2f2f2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                text-align: center;
+              }
+      
+              .content-container {
+                background-color: #e3f2fd;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 600px;
+              }
+      
+              h1 {
+                font-size: 50px;
+                color: green;
+                margin-bottom: 20px;
+              }
+      
+              p {
+                font-size: 18px;
+                color: #555;
+                margin-bottom: 20px;
+              }
+      
+              .token-info p {
+                font-size: 18px;
+                color: #333;
+              }
+      
+              .token-info strong {
+                font-weight: bold;
+              }
+            </style>
           </head>
-          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-            <h1 style="font-size: 50px; color: green;">Done!</h1>
-            <p style="font-size: 20px;">OAuth Process Completed Successfully.</p>
-            <div style="margin-top: 20px;">
-              <p style="font-size: 18px;">Access Token: <strong>${access_token}</strong></p>
-              <p style="font-size: 18px;">ID Token: <strong>${id_token || 'No ID token received'}</strong></p>
-              <p style="font-size: 18px;">Token Type: <strong>${token_type || 'Bearer'}</strong></p>
+          <body>
+            <div class="content-container">
+              <h1>Done!</h1>
+              <p>OAuth Process Completed Successfully.</p>
+              <div class="token-info">
+                <p>Access Token: <strong>${access_token}</strong></p>
+              </div>
             </div>
           </body>
         </html>
@@ -67,20 +110,74 @@ app.get('/callback', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send(`
-      <html>
-        <head>
-          <title>OAuth Login</title>
-        </head>
-        <body style="font-family: Arial, sans-serif; padding: 20px; text-align: center;">
-          <h1>Welcome to the OAuth Example</h1>
-          <p>Click the button below to login via OAuth:</p>
-          <a href="/login">
-            <button style="padding: 10px 20px; font-size: 16px; cursor: pointer;">Login with OAuth</button>
-          </a>
-        </body>
-      </html>
-    `);
+  
+res.send(`
+  <html>
+    <head>
+      <title>Simple Page</title>
+      <style>
+        /* General Styles */
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f2f2f2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          text-align: center;
+        }
+
+        .content-container {
+          background-color: #e3f2fd;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 500px;
+        }
+
+        h1 {
+          font-size: 32px;
+          margin-bottom: 20px;
+          color: #333;
+        }
+
+        p {
+          font-size: 18px;
+          color: #555;
+          margin-bottom: 30px;
+        }
+
+        /* Button Styles */
+        .btn {
+          padding: 12px 20px;
+          background-color: #0056b3;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+          background-color: #004494;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="content-container">
+        <h1>Welcome to Our Page</h1>
+        <p>This is a simple page with a title, description, and a button below. Click the button to take action!</p>
+        <a href="/login">
+          <button class="btn">Log in</button>
+        </a>
+      </div>
+    </body>
+  </html>
+`);
+  
 });  
 
 app.listen(port, () => {
