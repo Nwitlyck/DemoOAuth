@@ -95,6 +95,8 @@ app.get('/callback', async (req, res) => {
       
               .token-info strong {
                 font-weight: bold;
+                word-wrap: break-word;
+                white-space: normal;
               }
             </style>
           </head>
