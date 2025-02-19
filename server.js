@@ -23,21 +23,17 @@ const scope = process.env.SCOPE;
 
 app.get('/login', (req, res) => {
   const acr_values = req.query.selectedOption;
-  
-  if(!acr_values){
+
+  if (!acr_values) {
     return res.redirect('/');
   }
-  
+
   const authUrl = `${authorization_url}?response_type=code&client_id=${client_id}&scope=${scope}&redirect_uri=${redirect_uri}&acr_values=${acr_values}`;
   res.redirect(authUrl);
 });
 
 app.get('/callback', async (req, res) => {
   const authorization_code = req.query.code;
-
-  if (!authorization_code) {
-    return res.status(400).json({ error: 'Authorization code not provided' });
-  }
 
   try {
     const response = await axios.post(token_url, new URLSearchParams({
@@ -103,7 +99,7 @@ app.get('/callback', async (req, res) => {
           <body>
             <div class="content-container">
               <h1>Done!</h1>
-              <p>OAuth Process Completed Successfully.</p>
+              <p>Identity Proofing Process Completed Successfully.</p>
               <div class="token-info">
                 <p>ID Token: <strong>${id_token || 'No ID token received'}</strong></p>
               </div>
@@ -119,9 +115,13 @@ app.get('/callback', async (req, res) => {
 
 app.get('/', (req, res) => {
 
+  const desc_1 = "Please select the preferred identity verification method and click Sign In to proceed.";
+  const desc_2 = "•	IAL2: This option will verify your identity by cross-referencing your Driver's License with DMV records.";
+  const desc_3 = "•	Government ID: Select this method to verify your identity using either your Driver's License or Passport.";
+
   const options = new Map([
     ["IAL2A", "IAL2"],
-    ["IAL1PLUSA", "Secure identity proofing"]
+    ["IAL1PLUSA", "Government ID"]
   ]);
 
   const dropdownOptions = Array.from(options).map(([key, value]) =>
@@ -167,29 +167,36 @@ app.get('/', (req, res) => {
 
           .btn {
             padding: 12px 20px;
-            background-color: #0056b3;
+            background-color: gray;
             color: #fff;
             border: none;
             border-radius: 5px;
             font-size: 16px;
-            cursor: pointer;
+            cursor: not-allowed;
             transition: background-color 0.3s ease;
           }
 
-          .btn:hover {
+          .btn.enabled {
+            background-color: #0056b3;
+            cursor: pointer;
+          }
+
+          .btn.enabled:hover {
             background-color: #004494;
           }
         </style>
       </head>
       <body>
         <div class="content-container">
-          <h1>Welcome to Our Page</h1>
-          <p>This is a simple page with a title, description, and a dropdown before the button.</p>
+          <h1>Welcome to the NCDIT Identity Proofing Demonstration</h1>
+          <p>${desc_1}</p>
+          <p>${desc_2}</p>
+          <p>${desc_3}</p>
           
           <!-- Form for submitting the dropdown value -->
           <form action="/login" method="GET">
             <!-- Dropdown Menu -->
-            <select id="dropdown" name="selectedOption">
+            <select id="dropdown" name="selectedOption" style="appearance: none; -webkit-appearance: none; -moz-appearance: none; width: 200px; padding: 12px 20px; font-size: 16px; background-color: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); cursor: pointer; transition: all 0.3s ease;">
               <option value="">Select an option</option>
               ${dropdownOptions}
             </select>
@@ -197,11 +204,26 @@ app.get('/', (req, res) => {
             <br><br>
             
             <!-- Submit Button -->
-            <button type="submit" class="btn">Submit</button>
+            <button type="submit" class="btn" id="submitBtn" disabled>Submit</button>
           </form>
         </div>
+
+        <script>
+          const dropdown = document.getElementById('dropdown');
+          const submitBtn = document.getElementById('submitBtn');
+          
+          dropdown.addEventListener('change', function() {
+            if (dropdown.value) {
+              submitBtn.disabled = false;  // Enable the button if an option is selected
+              submitBtn.classList.add('enabled');  // Add enabled class for styling
+            } else {
+              submitBtn.disabled = true;  // Disable the button if no option is selected
+              submitBtn.classList.remove('enabled');  // Remove enabled class
+            }
+          });
+        </script>
       </body>
-    </html>   
+    </html>
   `);
 
 });
