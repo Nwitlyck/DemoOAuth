@@ -59,7 +59,7 @@ app.get('/callback', async (req, res) => {
             /* General Styles */
             body {
               font-family: 'Roboto', sans-serif;
-              background-image: url('https://www.libertyflagpoles.com/cdn/shop/products/AdobeStock_68923380.jpg?v=1670785190&width=3000');
+              background-image: url('images/background.jpg');
               background-size: cover;
               background-position: center;
               background-attachment: fixed;
@@ -169,7 +169,7 @@ app.get('/', (req, res) => {
           /* General Styles */
           body {
             font-family: 'Roboto', sans-serif;
-            background-image: url('https://www.libertyflagpoles.com/cdn/shop/products/AdobeStock_68923380.jpg?v=1670785190&width=3000');
+            background-image: url('images/background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -285,6 +285,8 @@ app.get('/', (req, res) => {
   `);
 
 });
+
+app.use(express.static('public'));
 
 // Start the server
 app.listen(port, () => {
