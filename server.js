@@ -14,6 +14,8 @@ const port = 3000;
 
 app.use(cors());
 
+const backgroundImage = "images/flag.jpg"
+
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const redirect_uri = process.env.REDIRECT_URI;
@@ -55,7 +57,7 @@ app.get('/callback', async (req, res) => {
 
             body {
               font-family: 'Roboto', sans-serif;
-              background-image: url('images/background.jpg');
+              background-image: url(${backgroundImage});
               background-size: cover;
               background-position: center;
               background-attachment: fixed;
@@ -145,7 +147,7 @@ app.get('/callback', async (req, res) => {
           <style>
             body {
               font-family: 'Roboto', sans-serif;
-              background-image: url('images/background.jpg');
+              background-image: url(${backgroundImage});
               background-size: cover;
               background-position: center;
               background-attachment: fixed;
@@ -235,13 +237,24 @@ app.get('/callback', async (req, res) => {
 app.get('/', (req, res) => {
   const descriptions = {
     step1: "Please select the preferred identity verification method and click Submit to proceed.",
-    step2: "IAL2: This option will verify your identity by cross-referencing your Driver's License with DMV records.",
-    step3: "Government ID: Select this method to verify your identity using either your Driver's License or Passport."
+    step2A: "IAL 2 Compliant: ",
+    step2B: "This option verifies an identity by matching the Driver's License Number and Date of Birth against the American Association of Motor Vehicle Administrators (AAMVA) national database",
+    step3A: "High Level of Assurance: ",
+    step3B: "This option verifies your identity by matching a live-selfie against the photo on your Driver's License or Passport.",
+    step4: "What's happening in the background?",
+    step5: "1.	Selfie Liveness - Confirming the user is real and present",
+    step6: "2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
+    step7: "3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license.",
+    step8: "4.	System of Record Check - Confirming the driver's license number and date of birth on the driver's license match what is in the AAMVA database",
+    step9: "What's happening in the background?",
+    step10: "1.	Selfie Liveness - Confirming the user is real and present",
+    step11: "2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
+    step12: "3.	3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license or passport."
   };
 
   const options = new Map([
-    ["IAL2A", "IAL2"],
-    ["IAL1PLUSA", "Government ID"]
+    ["IAL2A", "IAL 2 Compliant"],
+    ["IAL1PLUSA", "High Level of Assurance"]
   ]);
 
   const dropdownOptions = Array.from(options).map(([key, value]) => 
@@ -257,7 +270,7 @@ app.get('/', (req, res) => {
 
           body {
             font-family: 'Roboto', sans-serif;
-            background-image: url('images/background.jpg');
+            background-image: url(${backgroundImage});
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -272,11 +285,11 @@ app.get('/', (req, res) => {
 
           .content-container {
             background-color: rgba(227, 242, 253, 0.9);
-            padding: 40px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 520px;
+            max-width: 1000px;
           }
 
           h1 {
@@ -339,8 +352,17 @@ app.get('/', (req, res) => {
         <div class="content-container">
           <h1>Welcome to the NCDIT Identity Proofing Demonstration</h1>
           <p>${descriptions.step1}</p>
-          <p>${descriptions.step2}</p>
-          <p>${descriptions.step3}</p>
+          <p><b>${descriptions.step2A}</b>${descriptions.step2B}</p>
+          <p><b>${descriptions.step4}</b></p>
+          <p>${descriptions.step5}</p>
+          <p>${descriptions.step6}</p>
+          <p>${descriptions.step7}</p>
+          <p>${descriptions.step8}</p>
+          <p><b>${descriptions.step3A}</b>${descriptions.step3B}</p>
+          <p><b>${descriptions.step9}</b></p>
+          <p>${descriptions.step10}</p>
+          <p>${descriptions.step11}</p>
+          <p>${descriptions.step12}</p>
           
           <form action="/login" method="GET">
             <select id="dropdown" name="selectedOption">
