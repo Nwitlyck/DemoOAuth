@@ -249,7 +249,7 @@ app.get('/', (req, res) => {
     step9: "What's happening in the background?",
     step10: "1.	Selfie Liveness - Confirming the user is real and present",
     step11: "2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
-    step12: "3.	3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license or passport."
+    step12: "3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license or passport."
   };
 
   const options = new Map([
