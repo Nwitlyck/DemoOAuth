@@ -223,8 +223,8 @@ app.get('/callback', async (req, res) => {
         </head>
         <body>
           <div class="content-container">
-            <h1>Some think happen</h1>
-            <p>Identity Proofing Process Was Not Completed Successfully.</p>
+            <h1>Something went wrong</h1>
+            <p>The identity proofing process was not completed successfully.</p>
             <p>Please return to the home page:</p>
             <a href="/" class="btn">Go to Home</a>
           </div>
