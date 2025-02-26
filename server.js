@@ -8,10 +8,6 @@ require("dotenv").config({ path: './oauthconfig.env' });
 const app = express();
 const port = 3000;
 
-//const agent = new https.Agent({
-//  rejectUnauthorized: false
-//});
-
 app.use(cors());
 
 const backgroundImage = "images/flag.jpg"
@@ -46,7 +42,7 @@ app.get('/callback', async (req, res) => {
       client_secret: client_secret
     }), { httpsAgent: agent });
 
-    const { access_token, id_token, token_type } = response.data;
+    const { id_token } = response.data;
 
     res.send(`
       <html>
@@ -92,8 +88,7 @@ app.get('/callback', async (req, res) => {
               font-size: 18px;
               color: #555;
               margin-bottom: 20px;
-            }
-    
+            }    
             .token-info p {
               font-size: 18px;
               color: #333;
@@ -143,7 +138,6 @@ app.get('/callback', async (req, res) => {
     console.error("\n"+error);
     
     if (error.includes("AAMVA")) {
-      
       res.send(`
         <html>
           <head>
@@ -152,7 +146,7 @@ app.get('/callback', async (req, res) => {
             <style>
               body {
                 font-family: 'Roboto', sans-serif;
-                background-image: url('images/flag.jpg');
+                background-image: url(${backgroundImage});
                 background-size: cover;
                 background-position: center;
                 background-attachment: fixed;
@@ -164,7 +158,7 @@ app.get('/callback', async (req, res) => {
                 text-align: center;
                 color: #222; 
               }
-
+      
               .content-container {
                 background-color: rgba(227, 242, 253, 0.9);
                 padding: 40px;
@@ -173,28 +167,28 @@ app.get('/callback', async (req, res) => {
                 width: 100%;
                 max-width: 520px;
               }
-
+      
               h1 {
                 font-size: 34px;
-                font-weight: 700
-                color: #555;
+                font-weight: 700;
+                color: #2C3E50;
                 margin-bottom: 25px;
                 font-family: 'Poppins', sans-serif;
                 text-align: center;
               }
-
+      
               p {
                 font-size: 18px;
                 color: #555;
                 margin-bottom: 20px;
               }
-
+      
               .error-icon {
                 font-size: 100px;
                 color: #e74c3c;
                 margin-bottom: 20px;
               }
-
+      
               .retry-button {
                 padding: 10px 20px;
                 background-color: #3498db;
@@ -204,7 +198,7 @@ app.get('/callback', async (req, res) => {
                 cursor: pointer;
                 font-size: 16px;
               }
-
+      
               .retry-button:hover {
                 background-color: #2980b9;
               }
@@ -212,14 +206,15 @@ app.get('/callback', async (req, res) => {
           </head>
           <body>
             <div class="content-container">
-              <h1>AMMVA was not pass</h1>
+              <h1>Verification of DMV records did not pass</h1>
               <p>Please return to the home page.</p>
-              <button class="retry-button" onclick="window.location.reload();">Try Again</button>
+              <button class="retry-button" onclick="window.location.href='/'">Try again</button>
             </div>
           </body>
         </html>
       `);
-    }
+    } 
+    else{
     res.send(`
       <html>
         <head>
@@ -307,11 +302,12 @@ app.get('/callback', async (req, res) => {
             <h1>Something went wrong</h1>
             <p>The identity proofing process was not completed successfully.</p>
             <p>Please return to the home page:</p>
-            <a href="/" class="btn">Go to Home</a>
+            <a href="/" class="btn">Go to home</a>
           </div>
         </body>
       </html>
     `);
+    }
   }
 });
 
