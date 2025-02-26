@@ -46,8 +46,6 @@ app.get('/callback', async (req, res) => {
       client_secret: client_secret
     }), { httpsAgent: agent });
 
-    const { access_token, id_token, token_type } = response.data;
-
     res.send(`
       <html>
         <head>
@@ -93,45 +91,12 @@ app.get('/callback', async (req, res) => {
               color: #555;
               margin-bottom: 20px;
             }
-    
-            .token-info p {
-              font-size: 18px;
-              color: #333;
-              margin-top: 20px;
-            }
-    
-            .id-token-container {
-              background-color: #ffffff;
-              padding: 20px;
-              margin-top: 20px;
-              border-radius: 8px;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-              max-width: 500px; 
-              word-wrap: break-word;
-              white-space: pre-wrap;
-              font-family: 'Courier New', Courier, monospace;
-              width: 100%;
-            }
-  
-            .token-info strong {
-              font-weight: normal;
-              display: block;
-              word-wrap: break-word;
-              white-space: pre-wrap;
-              overflow-wrap: break-word;
-            }
           </style>
         </head>
         <body>
           <div class="content-container">
             <h1>Success!</h1>
             <p>Identity Proofing Process Completed Successfully.</p>
-            <div class="token-info">
-              <p>ID Token:</p>
-              <div class="id-token-container">
-                <strong>${id_token || 'No ID token received'}</strong>
-              </div>
-            </div>
           </div>
         </body>
       </html>
@@ -143,7 +108,6 @@ app.get('/callback', async (req, res) => {
     console.error("\n"+error);
     
     if (error.includes("AAMVA")) {
-      
       res.send(`
         <html>
           <head>
@@ -152,7 +116,7 @@ app.get('/callback', async (req, res) => {
             <style>
               body {
                 font-family: 'Roboto', sans-serif;
-                background-image: url('images/flag.jpg');
+                background-image: url(${backgroundImage});
                 background-size: cover;
                 background-position: center;
                 background-attachment: fixed;
@@ -212,14 +176,14 @@ app.get('/callback', async (req, res) => {
           </head>
           <body>
             <div class="content-container">
-              <h1>AMMVA was not pass</h1>
+              <h1>Verification of DMV records did not pass</h1>
               <p>Please return to the home page.</p>
-              <button class="retry-button" onclick="window.location.reload();">Try Again</button>
+              <button class="retry-button" onclick="window.location.reload();">Try again</button>
             </div>
           </body>
         </html>
       `);
-    }
+    } 
     res.send(`
       <html>
         <head>
@@ -307,7 +271,7 @@ app.get('/callback', async (req, res) => {
             <h1>Something went wrong</h1>
             <p>The identity proofing process was not completed successfully.</p>
             <p>Please return to the home page:</p>
-            <a href="/" class="btn">Go to Home</a>
+            <a href="/" class="btn">Go to home</a>
           </div>
         </body>
       </html>
