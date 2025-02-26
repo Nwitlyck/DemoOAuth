@@ -132,14 +132,14 @@ app.get('/callback', async (req, res) => {
       </html>
     `);
   } catch (e) {
-    
-    let error = req.query.error_description;
-    
-    console.error("\n"+error);
 
-    if (error === undefined){
-      error = "Fail"
-    }
+    let error = req.query.error_description;
+
+    if (typeof error === "undefined"){
+      error = "Not Spected";
+    } 
+    
+    console.error(error);
     
     if (error.includes("AAMVA")) {
       res.send(`
