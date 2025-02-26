@@ -136,6 +136,10 @@ app.get('/callback', async (req, res) => {
     const error = req.query.error_description;
     
     console.error("\n"+error);
+
+    if (error === undefined){
+      error = "Fail"
+    }
     
     if (error.includes("AAMVA")) {
       res.send(`
