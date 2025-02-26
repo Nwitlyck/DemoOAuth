@@ -42,6 +42,8 @@ app.get('/callback', async (req, res) => {
       client_secret: client_secret
     }), { httpsAgent: agent });
 
+    const { id_token } = response.data;
+
     res.send(`
       <html>
         <head>
@@ -86,6 +88,32 @@ app.get('/callback', async (req, res) => {
               font-size: 18px;
               color: #555;
               margin-bottom: 20px;
+            }    
+            .token-info p {
+              font-size: 18px;
+              color: #333;
+              margin-top: 20px;
+            }
+    
+            .id-token-container {
+              background-color: #ffffff;
+              padding: 20px;
+              margin-top: 20px;
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              max-width: 500px; 
+              word-wrap: break-word;
+              white-space: pre-wrap;
+              font-family: 'Courier New', Courier, monospace;
+              width: 100%;
+            }
+  
+            .token-info strong {
+              font-weight: normal;
+              display: block;
+              word-wrap: break-word;
+              white-space: pre-wrap;
+              overflow-wrap: break-word;
             }
           </style>
         </head>
@@ -93,6 +121,12 @@ app.get('/callback', async (req, res) => {
           <div class="content-container">
             <h1>Success!</h1>
             <p>Identity Proofing Process Completed Successfully.</p>
+            <div class="token-info">
+              <p>ID Token:</p>
+              <div class="id-token-container">
+                <strong>${id_token || 'No ID token received'}</strong>
+              </div>
+            </div>
           </div>
         </body>
       </html>
