@@ -136,9 +136,90 @@ app.get('/callback', async (req, res) => {
         </body>
       </html>
     `);
-  } catch (error) {
-    console.error('Error exchanging authorization code for token:', error.response?.data || error.message);
-    //res.status(500).json({ error: 'Failed to obtain token', details: error.response?.data || error.message });
+  } catch (e) {
+    
+    const error = req.query.error_description;
+    
+    console.error("\n"+error);
+    
+    if (error.includes("AAMVA")) {
+      
+      res.send(`
+        <html>
+          <head>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+            <title>Error - Felipe Not Found</title>
+            <style>
+              body {
+                font-family: 'Roboto', sans-serif;
+                background-image: url('images/flag.jpg');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                text-align: center;
+                color: #222; 
+              }
+
+              .content-container {
+                background-color: rgba(227, 242, 253, 0.9);
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                max-width: 520px;
+              }
+
+              h1 {
+                font-size: 34px;
+                font-weight: 700
+                color: #555;
+                margin-bottom: 25px;
+                font-family: 'Poppins', sans-serif;
+                text-align: center;
+              }
+
+              p {
+                font-size: 18px;
+                color: #555;
+                margin-bottom: 20px;
+              }
+
+              .error-icon {
+                font-size: 100px;
+                color: #e74c3c;
+                margin-bottom: 20px;
+              }
+
+              .retry-button {
+                padding: 10px 20px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+              }
+
+              .retry-button:hover {
+                background-color: #2980b9;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="content-container">
+              <h1>AMMVA was not pass</h1>
+              <p>Please return to the home page.</p>
+              <button class="retry-button" onclick="window.location.reload();">Try Again</button>
+            </div>
+          </body>
+        </html>
+      `);
+    }
     res.send(`
       <html>
         <head>
