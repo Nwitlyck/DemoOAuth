@@ -139,7 +139,7 @@ app.get('/callback', async (req, res) => {
       error = "Not Spected";
     } 
     
-    console.error("Request error description:" + error + "\nError response data: " + e.response?.data || e.message);
+    console.error("Request error description:" + error + "\nError response data: " + e);
     
     if (error.includes("AAMVA")) {
       res.send(`
