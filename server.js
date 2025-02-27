@@ -323,14 +323,14 @@ app.get('/', (req, res) => {
     step3A: "High Level of Assurance: ",
     step3B: "This option verifies your identity by matching a live-selfie against the photo on your Driver's License or Passport.",
     step4:  "What's happening in the background?",
-    step5:  "&nbsp;&nbsp;&nbsp;1.	Selfie Liveness - Confirming the user is real and present",
-    step6:  "&nbsp;&nbsp;&nbsp;2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
-    step7:  "&nbsp;&nbsp;&nbsp;3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license.",
-    step8:  "&nbsp;&nbsp;&nbsp;4.	System of Record Check - Confirming the driver's license number and date of birth on the driver's license match what is in the AAMVA database",
+    step5:  "1.	Selfie Liveness - Confirming the user is real and present",
+    step6:  "2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
+    step7:  "3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license.",
+    step8:  "4.	System of Record Check - Confirming the driver's license number and date of birth on the driver's license match what is in the AAMVA database",
     step9:  "What's happening in the background?",
-    step10: "&nbsp;&nbsp;&nbsp;1.	Selfie Liveness - Confirming the user is real and present",
-    step11: "&nbsp;&nbsp;&nbsp;2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
-    step12: "&nbsp;&nbsp;&nbsp;3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license or passport."
+    step10: "1.	Selfie Liveness - Confirming the user is real and present",
+    step11: "2.	Document Authentication - Confirming the driver's license is real and has not been altered in any way",
+    step12: "3.	Selfie Matching - Confirming the selfie that was taken matches the photo on the driver's license or passport."
   };
 
   const options = new Map([
@@ -427,6 +427,10 @@ app.get('/', (req, res) => {
             transform: scale(1.05);
           }
 
+          .indented {
+            margin-left: 40px;
+          }
+
         </style>
       </head>
       <body>
@@ -435,13 +439,19 @@ app.get('/', (req, res) => {
           <p>
             ${descriptions.step1}<br><br>
             <b>${descriptions.step2A}</b>${descriptions.step2B}<br><br>
-            <b>${descriptions.step4}</b><br><br>
+            <b>${descriptions.step4}</b><br>
+          </p>
+          <p class = "indented">
             ${descriptions.step5}<br>
             ${descriptions.step6}<br>
             ${descriptions.step7}<br>
-            ${descriptions.step8}<br><br>
+            ${descriptions.step8}<br>
+          </p>
+          <p>
             <b>${descriptions.step3A}</b>${descriptions.step3B}<br><br>
-            <b>${descriptions.step9}</b><br><br>
+            <b>${descriptions.step9}</b><br>
+          </p>
+          <p class = "indented">
             ${descriptions.step10}<br>
             ${descriptions.step11}<br>
             ${descriptions.step12}
