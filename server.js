@@ -8,6 +8,10 @@ require("dotenv").config({ path: './oauthconfig.env' });
 const app = express();
 const port = 3000;
 
+const agent = new https.Agent({
+  rejectUnauthorized: false
+});
+
 app.use(cors());
 
 const backgroundImage = "images/flag.jpg"
